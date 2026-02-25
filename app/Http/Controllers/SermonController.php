@@ -3,40 +3,49 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sermon;
-use App\Models\SerieSermon;
 use Illuminate\Http\Request;
 
 class SermonController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Sermon::with('serie')->where('publie', true);
+        $query = Sermon::where('publie', true);
 
+        // Recherche
         if ($request->filled('q')) {
             $q = $request->q;
             $query->where(function ($sq) use ($q) {
-                $sq->where('titre',       'like', "%{$q}%")
-                   ->orWhere('predicateur','like', "%{$q}%")
-                   ->orWhere('reference_biblique', 'like', "%{$q}%");
+                $sq->where('titre', 'like', "%{$q}%")
+                   ->orWhere('predicateur', 'like', "%{$q}%")
+                   ->orWhere('passage_biblique', 'like', "%{$q}%");
             });
         }
 
+        // Filtre série (champ texte dans ton modèle)
         if ($request->filled('serie')) {
-            $query->where('serie_id', $request->serie);
+            $query->where('serie', $request->serie);
         }
 
+        // Filtre prédicateur
         if ($request->filled('predicateur')) {
             $query->where('predicateur', $request->predicateur);
         }
 
-        $sermons = $query->orderByDesc('date_sermon')->paginate(12)->withQueryString();
+        $sermons = $query->orderByDesc('date_predication')
+                         ->paginate(12)
+                         ->withQueryString();
 
-        $sermonsVedette = Sermon::where('publie', true)
-            ->where('est_vedette', true)
-            ->latest('date_sermon')
+        // Sermon vedette (si tu veux garder ce concept)
+        $sermonVedette = Sermon::where('publie', true)
+            ->orderByDesc('date_predication')
             ->first();
 
-        $series       = SerieSermon::orderBy('nom')->get();
+        // Liste séries uniques
+        $series = Sermon::whereNotNull('serie')
+            ->distinct()
+            ->pluck('serie');
+
+        // Liste prédicateurs
         $predicateurs = Sermon::where('publie', true)
             ->whereNotNull('predicateur')
             ->distinct()
@@ -44,7 +53,7 @@ class SermonController extends Controller
 
         return view('sermons.index', compact(
             'sermons',
-            'sermonsVedette',
+            'sermonVedette',
             'series',
             'predicateurs'
         ));
@@ -54,22 +63,27 @@ class SermonController extends Controller
     {
         abort_if(!$sermon->publie, 404);
 
-        // Sermons de la même série (hors sermon courant)
+        // Sermons de la même série
         $sermonsSerie = collect();
-        if ($sermon->serie_id) {
-            $sermonsSerie = Sermon::where('serie_id', $sermon->serie_id)
+        if ($sermon->serie) {
+            $sermonsSerie = Sermon::where('serie', $sermon->serie)
+                ->where('id', '!=', $sermon->id)
                 ->where('publie', true)
-                ->orderBy('date_sermon')
+                ->orderBy('date_predication')
                 ->get();
         }
 
-        // Sermons récents (hors série courante et sermon courant)
+        // Sermons récents
         $sermonsRecents = Sermon::where('publie', true)
             ->where('id', '!=', $sermon->id)
-            ->orderByDesc('date_sermon')
+            ->orderByDesc('date_predication')
             ->take(5)
             ->get();
 
-        return view('sermons.show', compact('sermon', 'sermonsSerie', 'sermonsRecents'));
+        return view('sermons.show', compact(
+            'sermon',
+            'sermonsSerie',
+            'sermonsRecents'
+        ));
     }
 }
