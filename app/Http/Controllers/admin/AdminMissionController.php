@@ -19,7 +19,11 @@ class AdminMissionController extends Controller
                   ->orWhere('pays', 'like', '%'.$request->q.'%');
         }
 
-        $missions = $query->orderBy('statut')->orderBy('nom')->paginate(12)->withQueryString();
+        // tri par actif puis nom
+        $missions = $query->orderByDesc('actif')
+                          ->orderBy('nom')
+                          ->paginate(12)
+                          ->withQueryString();
 
         return view('admin.missions.index', compact('missions'));
     }
@@ -79,9 +83,9 @@ class AdminMissionController extends Controller
             'pays'         => 'nullable|string|max:100',
             'region'       => 'nullable|string|max:100',
             'description'  => 'nullable|string',
-            'missionnaire' => 'nullable|string|max:200',
+            'responsable'  => 'nullable|string|max:200',
             'objectif_don' => 'nullable|numeric|min:0',
-            'statut'       => 'required|in:active,terminee,planifiee',
+            'actif'        => 'required|boolean',
             'image'        => 'nullable|image|max:2048',
         ]);
     }

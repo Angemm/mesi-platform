@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Models\Actualite;
+
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class AdminActualiteController extends Controller

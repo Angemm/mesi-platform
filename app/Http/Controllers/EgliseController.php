@@ -11,7 +11,7 @@ class EgliseController extends Controller
         return [
             // 'membres'     => Membre::where('statut', 'actif')->count(),
             'departements'=> Departement::count(),
-            'missions'    => \App\Models\Mission::where('statut', 'active')->count(),
+            'missions' => \App\Models\Mission::where('actif', true)->count(),
             'annees'      => (int) date('Y') - 1990,
         ];
     }

@@ -52,10 +52,9 @@
                         </div>
                         <div>
                             <label class="block text-xs font-black uppercase tracking-wider text-slate-500 mb-2">Statut</label>
-                            <select name="statut" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none bg-white">
-                                <option value="active" {{ old('statut', $mission->statut ?? 'active') === 'active' ? 'selected' : '' }}>Active</option>
-                                <option value="terminee" {{ old('statut', $mission->statut ?? '') === 'terminee' ? 'selected' : '' }}>Terminée</option>
-                                <option value="planifiee" {{ old('statut', $mission->statut ?? '') === 'planifiee' ? 'selected' : '' }}>Planifiée</option>
+                            <select name="actif" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm bg-white">
+                                <option value="1" {{ old('actif', $mission->actif ?? 1) == 1 ? 'selected' : '' }}>Active</option>
+                                <option value="0" {{ old('actif', $mission->actif ?? 1) == 0 ? 'selected' : '' }}>Inactive</option>
                             </select>
                         </div>
                     </div>
