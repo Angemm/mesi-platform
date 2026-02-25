@@ -1,9 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
+/**
+ * AdminController — Contrôleur de base pour l'administration.
+ * Les autres controllers admin peuvent en hériter si besoin.
+ */
 class AdminController extends Controller
 {
     //

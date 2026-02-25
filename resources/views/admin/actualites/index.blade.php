@@ -1,90 +1,81 @@
-@extends('layouts.app')
-@section('title','Actualités — M.E.SI')
+@extends('layouts.admin')
+@section('title', 'Actualités — Admin')
+@section('page-title', 'Actualités')
 
 @section('content')
 
-<div class="navy-gradient py-20 text-center relative overflow-hidden">
-    <div class="absolute inset-0" style="background-image:radial-gradient(circle,rgba(232,176,75,.07) 1px,transparent 1px);background-size:40px 40px;"></div>
-    <div class="relative z-10">
-        <span class="text-gold font-black text-xs uppercase tracking-widest">Publications</span>
-        <h1 class="font-serif font-black text-white mt-3" style="font-size:clamp(2rem,4vw,3rem)">Actualités de l'Église</h1>
-    </div>
+<div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+    <form method="GET" action="{{ route('admin.actualites.index') }}" class="flex gap-3 flex-1 max-w-md">
+        <input type="text" name="q" value="{{ request('q') }}" placeholder="Rechercher…"
+               class="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none">
+        <button type="submit" class="px-4 py-2.5 rounded-xl text-white text-sm font-bold" style="background:#2D6A27;"><i class="fas fa-search"></i></button>
+    </form>
+    <a href="{{ route('admin.actualites.create') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-white text-sm font-bold" style="background:linear-gradient(135deg,#F4BC55,#E8A020,#C47D0A);">
+        <i class="fas fa-plus"></i> Nouvelle Actualité
+    </a>
 </div>
 
-<section class="py-16 bg-slate-50">
-<div class="max-w-7xl mx-auto px-6">
-
-    {{-- Article en vedette --}}
-    @if($enVedette)
-    <div class="mb-14 reveal">
-        <a href="{{ route('actualites.show', $enVedette->slug) }}" class="group grid lg:grid-cols-2 bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm card-hover">
-            <div class="aspect-video lg:aspect-auto img-zoom">
-                <img src="{{ $enVedette->image ? asset('storage/'.$enVedette->image) : asset('images/default-news.jpg') }}" alt="{{ $enVedette->titre }}" class="w-full h-full object-cover">
-            </div>
-            <div class="p-10 flex flex-col justify-center">
-                <div class="flex items-center gap-2 mb-4">
-                    <span class="gold-gradient text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider">★ En Vedette</span>
-                    @if($enVedette->categorie)<span class="text-gold-dark text-xs font-black uppercase tracking-wider">{{ $enVedette->categorie->nom }}</span>@endif
-                </div>
-                <h2 class="font-serif font-black text-slate-900 text-2xl md:text-3xl leading-tight mb-4 group-hover:text-gold-dark transition-colors">{{ $enVedette->titre }}</h2>
-                <p class="text-slate-500 leading-relaxed mb-6">{{ Str::limit(strip_tags($enVedette->extrait ?? $enVedette->contenu), 180) }}</p>
-                <div class="flex items-center justify-between">
-                    <span class="text-xs text-slate-400"><i class="fas fa-calendar mr-1.5 text-gold/60"></i>{{ $enVedette->created_at->isoFormat('D MMMM YYYY') }}</span>
-                    <span class="inline-flex items-center gap-1.5 text-sm font-black text-gold-dark group-hover:gap-3 transition-all">
-                        Lire <i class="fas fa-arrow-right text-xs"></i>
-                    </span>
-                </div>
-            </div>
-        </a>
-    </div>
+<div class="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm">
+    <table class="w-full text-sm">
+        <thead>
+            <tr style="background:#F8F6F2;">
+                <th class="text-left px-5 py-4 text-xs font-black uppercase tracking-wider text-slate-500">Article</th>
+                <th class="text-left px-5 py-4 text-xs font-black uppercase tracking-wider text-slate-500 hidden md:table-cell">Catégorie</th>
+                <th class="text-left px-5 py-4 text-xs font-black uppercase tracking-wider text-slate-500 hidden lg:table-cell">Date</th>
+                <th class="text-left px-5 py-4 text-xs font-black uppercase tracking-wider text-slate-500">Statut</th>
+                <th class="text-right px-5 py-4 text-xs font-black uppercase tracking-wider text-slate-500">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-50">
+            @forelse($actualites as $actu)
+            <tr class="hover:bg-slate-50 transition-colors">
+                <td class="px-5 py-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl overflow-hidden flex-shrink-0">
+                            <img src="{{ $actu->image ? asset('storage/'.$actu->image) : asset('images/default-news.jpg') }}" alt="" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <p class="font-bold text-slate-900">{{ Str::limit($actu->titre, 35) }}</p>
+                            <p class="text-xs text-slate-400">{{ $actu->created_at->isoFormat('D MMM YYYY') }}</p>
+                        </div>
+                    </div>
+                </td>
+                <td class="px-5 py-4 text-slate-600 hidden md:table-cell">{{ $actu->categorie?->nom ?? 'Général' }}</td>
+                <td class="px-5 py-4 text-slate-600 hidden lg:table-cell">{{ $actu->created_at->isoFormat('D MMM YYYY') }}</td>
+                <td class="px-5 py-4">
+                    @if($actu->publie)
+                        <span class="px-2.5 py-1 rounded-full text-[10px] font-black" style="background:rgba(74,140,63,.12);color:#2D6A27;">Publié</span>
+                    @else
+                        <span class="px-2.5 py-1 rounded-full text-[10px] font-black bg-slate-100 text-slate-500">Brouillon</span>
+                    @endif
+                </td>
+                <td class="px-5 py-4">
+                    <div class="flex items-center justify-end gap-2">
+                        <a href="{{ route('actualites.show', $actu->slug) }}" target="_blank" class="p-2 rounded-lg text-slate-400 hover:text-green-600 hover:bg-green-50 transition-colors">
+                            <i class="fas fa-external-link-alt text-xs"></i>
+                        </a>
+                        <a href="{{ route('admin.actualites.edit', $actu) }}" class="p-2 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-colors">
+                            <i class="fas fa-pen text-xs"></i>
+                        </a>
+                        <form method="POST" action="{{ route('admin.actualites.destroy', $actu) }}" onsubmit="return confirm('Supprimer ?')">
+                            @csrf @method('DELETE')
+                            <button type="submit" class="p-2 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors">
+                                <i class="fas fa-trash text-xs"></i>
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            @empty
+            <tr><td colspan="5" class="text-center py-12 text-slate-400">
+                <i class="fas fa-newspaper text-3xl mb-2 block text-slate-200"></i> Aucune actualité.
+            </td></tr>
+            @endforelse
+        </tbody>
+    </table>
+    @if(isset($actualites) && $actualites->hasPages())
+    <div class="px-5 py-4 border-t border-slate-100">{{ $actualites->links() }}</div>
     @endif
-
-    {{-- Filtres catégories --}}
-    <div class="flex gap-2.5 flex-wrap mb-10">
-        <a href="{{ route('actualites.index') }}" class="px-4 py-2 rounded-full text-sm font-bold transition-all {{ !request('categorie') ? 'gold-gradient text-white shadow-md shadow-gold/25' : 'bg-white text-slate-600 border border-slate-200 hover:border-gold/40 hover:text-gold-dark' }}">
-            Toutes
-        </a>
-        @foreach($categories as $cat)
-        <a href="{{ route('actualites.index', ['categorie' => $cat->slug]) }}"
-           class="px-4 py-2 rounded-full text-sm font-bold transition-all {{ request('categorie') === $cat->slug ? 'gold-gradient text-white shadow-md shadow-gold/25' : 'bg-white text-slate-600 border border-slate-200 hover:border-gold/40 hover:text-gold-dark' }}">
-            {{ $cat->nom }} <span class="text-[10px] opacity-60">({{ $cat->actualites_count }})</span>
-        </a>
-        @endforeach
-    </div>
-
-    {{-- Grille --}}
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-7">
-        @forelse($actualites as $actu)
-        <article class="group flex flex-col bg-white rounded-3xl overflow-hidden border border-slate-100 card-hover shadow-sm">
-            <div class="aspect-[4/3] img-zoom">
-                <img src="{{ $actu->image ? asset('storage/'.$actu->image) : asset('images/default-news.jpg') }}" alt="{{ $actu->titre }}" class="w-full h-full object-cover">
-            </div>
-            <div class="p-7 flex flex-col flex-1">
-                <div class="flex items-center gap-2 mb-3">
-                    <span class="text-xs font-black text-gold-dark uppercase tracking-wider">{{ $actu->categorie?->nom ?? 'Général' }}</span>
-                    <span class="w-1 h-1 rounded-full bg-slate-200"></span>
-                    <span class="text-xs text-slate-400">{{ $actu->created_at->isoFormat('D MMM YYYY') }}</span>
-                </div>
-                <h3 class="font-serif font-bold text-slate-900 text-xl leading-snug mb-3 group-hover:text-gold-dark transition-colors flex-1">
-                    <a href="{{ route('actualites.show', $actu->slug) }}">{{ $actu->titre }}</a>
-                </h3>
-                <p class="text-sm text-slate-500 leading-relaxed mb-5 line-clamp-3">{{ Str::limit(strip_tags($actu->extrait ?? $actu->contenu), 120) }}</p>
-                <a href="{{ route('actualites.show', $actu->slug) }}" class="mt-auto inline-flex items-center gap-1.5 text-sm font-black text-slate-900 group-hover:text-gold-dark group-hover:gap-3 transition-all pt-4 border-t border-slate-100">
-                    Lire la suite <i class="fas fa-arrow-right text-xs"></i>
-                </a>
-            </div>
-        </article>
-        @empty
-        <div class="col-span-full text-center py-20 text-slate-400">
-            <i class="fas fa-newspaper text-5xl mb-4 block text-slate-200"></i>
-            <p>Aucune actualité publiée pour le moment.</p>
-        </div>
-        @endforelse
-    </div>
-
-    <div class="flex justify-center gap-2 mt-12">
-        {{ $actualites->links('vendor.pagination.custom') }}
-    </div>
 </div>
-</section>
+
 @endsection
