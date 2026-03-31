@@ -3,7 +3,7 @@
 
 @section('content')
 
-<section class="py-16 text-center relative overflow-hidden" style="background:linear-gradient(135deg,#2D6A27 0%,#1C3A18 100%);">
+<section class="py-16 text-center relative overflow-hidden" style="background:linear-gradient(135deg,#2d6a4f,#52b788);">
     <div class="absolute inset-0" style="background-image:radial-gradient(circle,rgba(232,160,32,.07) 1px,transparent 1px);background-size:40px 40px;"></div>
     <div class="relative z-10 max-w-2xl mx-auto px-6">
         <span class="inline-block px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest mb-5" style="background:rgba(232,160,32,.15);color:#E8A020;">L'Église</span>
@@ -17,7 +17,7 @@
     <div class="max-w-7xl mx-auto px-6 flex gap-2 overflow-x-auto">
         @foreach([['eglise.index','Présentation'],['eglise.histoire','Notre Histoire'],['eglise.vision','Vision & Mission'],['eglise.pasteurs','Nos Pasteurs'],['eglise.departements','Départements']] as [$r,$l])
         <a href="{{ route($r) }}" class="px-4 py-2 rounded-xl text-sm font-bold whitespace-nowrap transition-all {{ request()->routeIs($r) ? 'text-white' : 'text-slate-500 hover:bg-slate-50' }}"
-           style="{{ request()->routeIs($r) ? 'background:linear-gradient(135deg,#4A8C3F,#2D6A27);' : '' }}">{{ $l }}</a>
+           style="{{ request()->routeIs($r) ? 'background:linear-gradient(135deg,#2d6a4f,#52b788);' : '' }}">{{ $l }}</a>
         @endforeach
     </div>
 </section>
@@ -35,7 +35,7 @@
         {{-- Timeline --}}
         <div class="relative">
             {{-- Ligne verticale --}}
-            <div class="absolute left-1/2 top-0 bottom-0 w-0.5 -translate-x-1/2 hidden md:block" style="background:linear-gradient(to bottom,#4A8C3F,#E8A020);"></div>
+            <div class="absolute left-1/2 top-0 bottom-0 w-0.5 -translate-x-1/2 hidden md:block" style="background:linear-gradient(to bottom,#2d6a4f,#e8b04b);"></div>
 
             @php
             $timeline = [
@@ -62,7 +62,7 @@
                         </div>
                     </div>
                     {{-- Point central --}}
-                    <div class="hidden md:flex w-4 h-4 rounded-full flex-shrink-0 z-10 shadow-md" style="background:linear-gradient(135deg,#4A8C3F,#2D6A27);"></div>
+                    <div class="hidden md:flex w-4 h-4 rounded-full flex-shrink-0 z-10 shadow-md" style="background:linear-gradient(135deg,#2d6a4f,#52b788);"></div>
                     {{-- Espace --}}
                     <div class="flex-1 hidden md:block"></div>
                 </div>
@@ -78,10 +78,12 @@
         <h2 class="font-serif font-black text-slate-900 text-2xl mb-4">Écrivez l'histoire avec nous</h2>
         <p class="text-slate-500 text-sm leading-relaxed mb-6">Rejoignez M.E.SI et participez à l'avancement de l'Évangile dans notre génération.</p>
         <a href="{{ route('contact') }}" class="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-white font-bold"
-           style="background:linear-gradient(135deg,#4A8C3F,#2D6A27);">
+           style="background:linear-gradient(135deg,#2d6a4f,#52b788);">
             <i class="fas fa-church"></i> Nous rejoindre
         </a>
     </div>
 </section>
 
 @endsection
+
+

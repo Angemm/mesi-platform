@@ -35,12 +35,13 @@ class EgliseController extends Controller
 
     public function pasteurs()
     {
-        $pasteurs = Membre::where('est_dirigeant', true)
-            ->orderBy('ordre', 'asc')
+        $pasteurs = Membre::whereIn('role', ['pasteur', 'ancien', 'diacre'])
+            ->where('actif', true)
+            ->orderBy('nom', 'asc')
             ->get();
 
-        $pasteurPrincipal = $pasteurs->first();
-        $autresPasteurs   = $pasteurs->skip(1);
+        $pasteurPrincipal = $pasteurs->where('role', 'pasteur')->first();
+        $autresPasteurs   = $pasteurs->filter(fn($m) => $m->id !== optional($pasteurPrincipal)->id);
 
         return view('eglise.pasteurs', compact('pasteurPrincipal', 'autresPasteurs'));
     }
@@ -48,7 +49,7 @@ class EgliseController extends Controller
     public function departements()
     {
         $departements = Departement::withCount('membres')
-            ->orderBy('ordre')
+            ->orderBy('nom')
             ->get();
 
         return view('eglise.departements', compact('departements'));

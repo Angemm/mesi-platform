@@ -9,10 +9,10 @@
 <section class="relative min-h-[92vh] flex items-end overflow-hidden bg-slate-50">
 
     {{-- BG image --}}
-    {{-- <div class="absolute inset-0 bg-cover bg-center" style="background-image:url('{{ asset('images/2026B.png') }}'); "></div> --}}
+    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image:url('{{ asset('images/Image.jpg') }}');"></div>
 
     {{-- Overlay gradient --}}
-    {{-- <div class="hero-gradient absolute inset-0"></div> --}}
+    <div class="absolute inset-0" style="background: linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.75) 100%);"></div>
 
     {{-- Grille de points dorés --}}
     <div class="absolute inset-0 animate-drift" style="background-image:radial-gradient(circle, rgba(232,176,75,.07) 1px, transparent 1px); background-size:44px 44px;"></div>
@@ -34,10 +34,10 @@
             <div class="inline-flex items-center gap-2 bg-gold/15 border border-gold/35 text-gold px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest mb-7 reveal">
                 <i class="fas fa-cross text-[10px]"></i> Bienvenue dans la famille
             </div>
-            <h1 class="font-serif font-black text-green-700 leading-[1.08] mb-6 reveal" style="font-size:clamp(2.4rem,5.5vw,4.2rem); animation-delay:.1s">
+            <h1 class="font-serif font-black text-white leading-[1.08] mb-6 reveal" style="font-size:clamp(2.4rem,5.5vw,4.2rem); animation-delay:.1s">
                 Mission Évangélique<br><span class="text-gold">Sion</span>
             </h1>
-            <p class="text-white/72 text-lg leading-relaxed max-w-xl mb-10 reveal" style="animation-delay:.2s">
+            <p class="text-white/85 text-lg leading-relaxed max-w-xl mb-10 reveal" style="animation-delay:.2s">
                 Une église vivante, enracinée dans la Parole de Dieu. Rejoignez-nous pour le culte, la communion fraternelle et l'avancement du Royaume.
             </p>
             <div class="flex gap-4 flex-wrap reveal" style="animation-delay:.3s">
@@ -50,7 +50,7 @@
                     <i class="fas fa-play-circle"></i> Voir nos Cultes
                 </a>
                 @endif
-                <a href="{{ route('eglise.index') }}" class="bg-white/12 border border-white/25 text-white px-7 py-3.5 rounded-xl font-bold flex items-center gap-2.5 hover:bg-white/22 hover:border-gold/50 hover:text-gold transition-all">
+                <a href="{{ route('eglise.index') }}" class="bg-white/10 border-2 border-white/60 text-white px-7 py-3.5 rounded-xl font-bold flex items-center gap-2.5 hover:bg-white hover:text-green-800 transition-all">
                     <i class="fas fa-church text-sm"></i> Découvrir l'Église
                 </a>
             </div>
@@ -74,7 +74,10 @@
      VERSET DU JOUR
 ══════════════════════════════════ --}}
 <section class="navy-gradient py-20 text-center relative overflow-hidden">
-    <div class="absolute top-4 left-1/2 -translate-x-1/2 font-serif text-[10rem] text-gold/6 leading-none select-none pointer-events-none">"</div>
+    {{-- Bandes vertes sur les côtés --}}
+    <div class="absolute left-0 top-0 bottom-0 w-2 bg-gold/60 rounded-r-full"></div>
+    <div class="absolute right-0 top-0 bottom-0 w-2 bg-gold/60 rounded-l-full"></div>
+    <div class="absolute top-4 left-1/2 -translate-x-1/2 font-serif text-[10rem] text-gold/20 leading-none select-none pointer-events-none">"</div>
     <div class="relative z-10 max-w-3xl mx-auto px-6">
         <p class="font-serif italic text-white leading-relaxed mb-5 reveal" style="font-size:clamp(1.15rem,2.5vw,1.65rem)">
             {{ $verset->texte ?? "pour le perfectionnement des saints en vue de l'œuvre du ministère et de l'édification du corps de Christ," }}
@@ -130,7 +133,7 @@
                     @foreach([
                         ['bg-gold/10 text-gold-dark','fas fa-users','Une Famille en Christ','Enracinés dans l\'amour du Christ, nous formons une communauté fraternelle chaleureuse.'],
                         ['bg-emerald-50 text-emerald-600','fas fa-heart','Une Communauté d\'Amour','Un réseau de soutien et d\'entraide pour chaque membre de notre famille spirituelle.'],
-                        ['bg-blue-50 text-blue-600','fas fa-globe','Une Église en Mission','Engagés pour la proclamation de l\'Évangile au-delà de nos frontières.'],
+                        ['bg-green-50 text-green-700','fas fa-globe','Une Église en Mission','Engagés pour la proclamation de l\'Évangile au-delà de nos frontières.'],
                     ] as [$bg,$icon,$title,$desc])
                     <div class="flex items-start gap-4 p-4 rounded-2xl hover:bg-slate-50 transition-colors">
                         <div class="p-3 {{ $bg }} rounded-xl flex-shrink-0">
@@ -199,7 +202,7 @@
                     @elseif($culte->est_a_venir)
                         <span class="absolute top-3 left-3 gold-gradient text-white text-xs font-black px-3 py-1 rounded-full">À VENIR</span>
                     @else
-                        <span class="absolute top-3 left-3 bg-navy text-white text-xs font-black px-3 py-1 rounded-full">REPLAY</span>
+                        <span class="absolute top-3 left-3 bg-green-800 text-white text-xs font-black px-3 py-1 rounded-full">REPLAY</span>
                     @endif
                 </div>
                 <div class="p-6">
@@ -213,7 +216,7 @@
                     <p class="text-sm text-slate-500 leading-relaxed mb-5">{{ Str::limit($culte->description, 90) }}</p>
                     @endif
                     @if($culte->est_live || $culte->lien_video)
-                    <a href="{{ route('cultes.show', $culte->slug) }}" class="inline-flex items-center gap-2 bg-navy text-white text-sm font-bold px-5 py-2.5 rounded-xl hover:bg-gold-dark transition-colors">
+                    <a href="{{ route('cultes.show', $culte->slug) }}" class="inline-flex items-center gap-2 bg-green-800 text-white text-sm font-bold px-5 py-2.5 rounded-xl hover:bg-gold-dark transition-colors">
                         <i class="fas fa-{{ $culte->est_live ? 'satellite-dish' : 'play' }} text-xs"></i>
                         {{ $culte->est_live ? 'Rejoindre le Live' : 'Voir le Replay' }}
                     </a>
@@ -308,7 +311,7 @@
             <div class="lg:col-span-3 space-y-4">
                 @forelse($evenements as $evt)
                 <div class="bg-white rounded-2xl p-5 flex gap-4 items-start border-l-4 border-gold card-hover">
-                    <div class="flex-shrink-0 w-14 text-center bg-navy rounded-xl py-2 px-1">
+                    <div class="flex-shrink-0 w-14 text-center bg-green-800 rounded-xl py-2 px-1">
                         <div class="font-serif font-bold text-gold text-2xl leading-none">{{ \Carbon\Carbon::parse($evt->date_debut)->format('d') }}</div>
                         <div class="text-white/60 text-[10px] uppercase mt-0.5">{{ \Carbon\Carbon::parse($evt->date_debut)->isoFormat('MMM') }}</div>
                     </div>
@@ -471,6 +474,30 @@
         <a href="{{ route('don') }}" class="gold-gradient text-white inline-flex items-center gap-3 px-9 py-4 rounded-xl font-bold text-lg shadow-xl shadow-gold/30 hover:shadow-gold/50 hover:-translate-y-1 transition-all">
             <i class="fas fa-heart"></i> Faire un Don
         </a>
+    </div>
+</section>
+
+{{-- ══════════════════════════════════
+     GALERIE PHOTOS
+══════════════════════════════════ --}}
+<section class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-14 reveal">
+            <span class="text-gold-dark font-black tracking-widest uppercase text-xs">Nos Moments</span>
+            <h2 class="font-serif font-black text-slate-900 mt-3 mb-4" style="font-size:clamp(1.8rem,3vw,2.5rem)">La Vie de l'Église en Images</h2>
+            <div class="w-14 h-0.5 gold-gradient mx-auto rounded-full"></div>
+            <p class="text-slate-500 mt-4 max-w-lg mx-auto text-sm leading-relaxed">Revivez les temps forts de notre communauté à travers nos photos.</p>
+        </div>
+
+        {{-- Placeholder galerie --}}
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            @foreach(range(1, 8) as $i)
+            <div class="aspect-square rounded-2xl bg-slate-100 border-2 border-dashed border-slate-200 flex flex-col items-center justify-center text-slate-300 gap-2">
+                <i class="fas fa-image text-3xl"></i>
+                <span class="text-xs font-bold uppercase tracking-wider">Photo</span>
+            </div>
+            @endforeach
+        </div>
     </div>
 </section>
 

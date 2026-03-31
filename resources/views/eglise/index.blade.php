@@ -4,7 +4,7 @@
 @section('content')
 
 {{-- HERO --}}
-<section class="py-24 relative overflow-hidden" style="background:linear-gradient(135deg,#2D6A27 0%,#1C3A18 100%);">
+<section class="py-24 relative overflow-hidden" style="background:linear-gradient(135deg,#2d6a4f,#52b788);">
     <div class="absolute inset-0" style="background-image:radial-gradient(circle,rgba(232,160,32,.07) 1px,transparent 1px);background-size:40px 40px;"></div>
     <div class="relative z-10 max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
         <div>
@@ -25,11 +25,11 @@
         <div class="relative hidden lg:block">
             <div class="rounded-3xl overflow-hidden shadow-2xl aspect-[4/3]">
                 <img src="{{ asset('images/eglise-hero.jpg') }}" alt="Église M.E.SI" class="w-full h-full object-cover" onerror="this.src='{{ asset('images/default-culte.jpg') }}'">
-                <div class="absolute inset-0" style="background:rgba(28,58,24,.2);"></div>
+                <div class="absolute inset-0" style="background:rgba(45,106,79,.2);"></div>
             </div>
             <div class="absolute -bottom-5 -left-5 bg-white rounded-2xl shadow-xl p-4 flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(74,140,63,.12);">
-                    <i class="fas fa-church" style="color:#2D6A27;"></i>
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(45,106,79,.12);">
+                    <i class="fas fa-church" style="color:#2d6a4f;"></i>
                 </div>
                 <div>
                     <p class="font-black text-slate-900 text-sm">Fondée en 1990</p>
@@ -51,7 +51,7 @@
             ['eglise.departements','Départements'],
         ] as [$r,$l])
         <a href="{{ route($r) }}" class="px-4 py-2 rounded-xl text-sm font-bold whitespace-nowrap transition-all {{ request()->routeIs($r) ? 'text-white' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50' }}"
-           style="{{ request()->routeIs($r) ? 'background:linear-gradient(135deg,#4A8C3F,#2D6A27);' : '' }}">{{ $l }}</a>
+           style="{{ request()->routeIs($r) ? 'background:linear-gradient(135deg,#2d6a4f,#52b788);' : '' }}">{{ $l }}</a>
         @endforeach
     </div>
 </section>
@@ -65,10 +65,10 @@
         </div>
         <div class="grid md:grid-cols-3 gap-8">
             @foreach([
-                ['fas fa-bible','#2D6A27','rgba(74,140,63,.08)','La Parole de Dieu','Nous croyons que la Bible est la Parole inspirée de Dieu, authorité suprême pour notre foi et notre vie.'],
+                ['fas fa-bible','#2D6A27','rgba(45,106,79,.1)','La Parole de Dieu','Nous croyons que la Bible est la Parole inspirée de Dieu, authorité suprême pour notre foi et notre vie.'],
                 ['fas fa-praying-hands','#C47D0A','rgba(232,160,32,.08)','La Prière','La prière est au cœur de notre vie communautaire. Nous croyons en la puissance de la prière intercessive.'],
                 ['fas fa-globe','#7B4A1E','rgba(123,74,30,.08)','L\'Évangélisation','Nous sommes appelés à proclamer l\'Évangile de Jésus-Christ à toutes les nations.'],
-                ['fas fa-users','#2D6A27','rgba(74,140,63,.08)','La Fraternité','L\'amour fraternel est notre marque distinctive. Nous nous soutenons mutuellement dans la foi.'],
+                ['fas fa-users','#2D6A27','rgba(45,106,79,.1)','La Fraternité','L\'amour fraternel est notre marque distinctive. Nous nous soutenons mutuellement dans la foi.'],
                 ['fas fa-hands-helping','#C47D0A','rgba(232,160,32,.08)','Le Service','Nous sommes serviteurs les uns des autres et de notre communauté, à l\'image du Christ.'],
                 ['fas fa-dove','#7B4A1E','rgba(123,74,30,.08)','Le Saint-Esprit','Nous croyons en l\'œuvre du Saint-Esprit qui guide, transforme et équipe l\'Église.'],
             ] as [$icon,$color,$bg,$titre,$desc])
@@ -85,7 +85,7 @@
 </section>
 
 {{-- CHIFFRES --}}
-<section class="py-16" style="background:linear-gradient(135deg,#2D6A27,#1C3A18);">
+<section class="py-16" style="background:linear-gradient(135deg,#2d6a4f,#52b788);">
     <div class="max-w-5xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
         @foreach([[$stats['membres'] ?? 0,'+','Membres'],[$stats['cultes'] ?? 0,'+','Cultes diffusés'],[$stats['missions'] ?? 0,'','Missions actives'],[$stats['annees'] ?? 30,'','Ans d\'histoire']] as [$v,$s,$l])
         <div>
@@ -101,10 +101,10 @@
     <div class="max-w-7xl mx-auto px-6">
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
             @foreach([
-                ['eglise.histoire','fas fa-history','Notre Histoire','Découvrez les origines et le parcours de M.E.SI.','#2D6A27','rgba(74,140,63,.08)'],
+                ['eglise.histoire','fas fa-history','Notre Histoire','Découvrez les origines et le parcours de M.E.SI.','#2D6A27','rgba(45,106,79,.1)'],
                 ['eglise.vision','fas fa-eye','Vision & Mission','Notre raison d\'être et nos objectifs pour le Royaume.','#C47D0A','rgba(232,160,32,.08)'],
                 ['eglise.pasteurs','fas fa-user-tie','Nos Pasteurs','Rencontrez les leaders qui guident notre communauté.','#7B4A1E','rgba(123,74,30,.08)'],
-                ['eglise.departements','fas fa-layer-group','Départements','Trouvez votre place dans nos différents ministères.','#2D6A27','rgba(74,140,63,.08)'],
+                ['eglise.departements','fas fa-layer-group','Départements','Trouvez votre place dans nos différents ministères.','#2D6A27','rgba(45,106,79,.1)'],
             ] as [$r,$icon,$titre,$desc,$color,$bg])
             <a href="{{ route($r) }}" class="block p-6 rounded-2xl border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition-all group">
                 <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style="background:{{ $bg }};">
@@ -120,3 +120,5 @@
 </section>
 
 @endsection
+
+

@@ -3,7 +3,7 @@
 
 @section('content')
 
-<section class="py-16 text-center relative overflow-hidden" style="background:linear-gradient(135deg,#2D6A27 0%,#1C3A18 100%);">
+<section class="py-16 text-center relative overflow-hidden" style="background:linear-gradient(135deg,#2d6a4f,#52b788);">
     <div class="absolute inset-0" style="background-image:radial-gradient(circle,rgba(232,160,32,.07) 1px,transparent 1px);background-size:40px 40px;"></div>
     <div class="relative z-10 max-w-2xl mx-auto px-6">
         <span class="inline-block px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest mb-5" style="background:rgba(232,160,32,.15);color:#E8A020;">Ministères</span>
@@ -16,7 +16,7 @@
     <div class="max-w-7xl mx-auto px-6 flex gap-2 overflow-x-auto">
         @foreach([['eglise.index','Présentation'],['eglise.histoire','Notre Histoire'],['eglise.vision','Vision & Mission'],['eglise.pasteurs','Nos Pasteurs'],['eglise.departements','Départements']] as [$r,$l])
         <a href="{{ route($r) }}" class="px-4 py-2 rounded-xl text-sm font-bold whitespace-nowrap transition-all {{ request()->routeIs($r) ? 'text-white' : 'text-slate-500 hover:bg-slate-50' }}"
-           style="{{ request()->routeIs($r) ? 'background:linear-gradient(135deg,#4A8C3F,#2D6A27);' : '' }}">{{ $l }}</a>
+           style="{{ request()->routeIs($r) ? 'background:linear-gradient(135deg,#2d6a4f,#52b788);' : '' }}">{{ $l }}</a>
         @endforeach
     </div>
 </section>
@@ -29,7 +29,7 @@
 
         @php
         $colors = ['#2D6A27','#C47D0A','#7B4A1E','#2D6A27','#C47D0A','#7B4A1E'];
-        $bgs = ['rgba(74,140,63,.08)','rgba(232,160,32,.08)','rgba(123,74,30,.08)','rgba(74,140,63,.08)','rgba(232,160,32,.08)','rgba(123,74,30,.08)'];
+        $bgs = ['rgba(45,106,79,.1)','rgba(232,160,32,.08)','rgba(123,74,30,.08)','rgba(45,106,79,.1)','rgba(232,160,32,.08)','rgba(123,74,30,.08)'];
         $icons = ['fas fa-music','fas fa-child','fas fa-female','fas fa-male','fas fa-hands-helping','fas fa-globe'];
         @endphp
 
@@ -101,3 +101,5 @@
 </section>
 
 @endsection
+
+

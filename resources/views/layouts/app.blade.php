@@ -15,8 +15,8 @@
                 extend: {
                     colors: {
                         gold: { DEFAULT: '#e8b04b', light: '#f5d07a', dark: '#c0892e', pale: '#fdf8f0' },
-                        navy: { DEFAULT: '#0d1b3e', mid: '#1a2d5a', light: '#243d6e' },
-                        dark: '#0a0a1a',
+                        navy: { DEFAULT: '#2d6a4f', mid: '#40916c', light: '#52b788' },
+                        dark: '#1b4332',
                     },
                     fontFamily: {
                         serif: ['"Playfair Display"', 'Georgia', 'serif'],
@@ -52,8 +52,8 @@
         [x-cloak] { display: none !important; }
 
         .gold-gradient { background: linear-gradient(135deg, #e8b04b, #c0892e); }
-        .navy-gradient { background: linear-gradient(135deg, #0d1b3e, #1a3a6e); }
-        .hero-gradient { background: linear-gradient(135deg, rgba(13,27,62,.96) 0%, rgba(13,27,62,.75) 50%, rgba(13,27,62,.45) 100%); }
+        .navy-gradient { background: linear-gradient(135deg, #2d6a4f, #52b788); }
+        .hero-gradient { background: linear-gradient(135deg, rgba(45,106,79,.96) 0%, rgba(45,106,79,.75) 50%, rgba(45,106,79,.45) 100%); }
         .glass { background: rgba(255,255,255,0.04); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); }
         .card-hover { transition: transform .35s cubic-bezier(.4,0,.2,1), box-shadow .35s cubic-bezier(.4,0,.2,1); }
         .card-hover:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,.12); }
@@ -91,12 +91,18 @@
 <body class="font-sans text-slate-800 bg-white overflow-x-hidden">
 
 {{-- ══════════ TOPBAR ══════════ --}}
-<div class="bg-navy text-white/70 text-xs py-2 hidden md:block">
+<div class="text-xs py-2 hidden md:block border-b border-slate-200" id="topbar" style="background:#fff; color:#1a4731;">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
         <div class="flex gap-6">
-            <span class="flex items-center gap-1.5"><i class="fas fa-map-marker-alt text-gold"></i> {{ config('mesi.adresse','Abidjan, Côte d\'Ivoire') }}</span>
-            <span class="flex items-center gap-1.5"><i class="fas fa-phone text-gold"></i> {{ config('mesi.telephone','+225 XX XX XX XX') }}</span>
-            <span class="flex items-center gap-1.5"><i class="fas fa-envelope text-gold"></i> {{ config('mesi.email','contact@mesi.org') }}</span>
+            <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode(config('mesi.adresse','Eglise MESI Faya Abidjan')) }}" target="_blank" class="flex items-center gap-1.5 hover:text-gold-dark transition-colors">
+                <i class="fas fa-map-marker-alt text-gold"></i> {{ config('mesi.adresse','Abidjan, Côte d\'Ivoire') }}
+            </a>
+            <a href="tel:{{ config('mesi.telephone','+225 XX XX XX XX') }}" class="flex items-center gap-1.5 hover:text-gold-dark transition-colors">
+                <i class="fas fa-phone text-gold"></i> {{ config('mesi.telephone','+225 XX XX XX XX') }}
+            </a>
+            <a href="mailto:{{ config('mesi.email','contact@mesi.org') }}" class="flex items-center gap-1.5 hover:text-gold-dark transition-colors">
+                <i class="fas fa-envelope text-gold"></i> {{ config('mesi.email','contact@mesi.org') }}
+            </a>
         </div>
         <div class="flex gap-3">
             <a href="{{ config('mesi.facebook','#') }}" target="_blank" class="hover:text-gold transition-colors"><i class="fab fa-facebook"></i></a>
@@ -108,7 +114,7 @@
 </div>
 
 {{-- ══════════ NAVBAR ══════════ --}}
-<nav id="navbar" class="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-gold/20 shadow-sm transition-all duration-300">
+<nav id="navbar" class="sticky top-0 z-50 transition-all duration-300" style="background:linear-gradient(135deg,#2d6a4f,#52b788);">
     <div class="max-w-7xl mx-auto px-6">
         <div class="flex items-center h-18 gap-8" style="height:72px">
 
@@ -117,17 +123,17 @@
                 <div class="w-10 h-10 gold-gradient rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-gold/30">
                 <img src="{{ asset('images/logo.jpg') }}" alt="Logo M.E.S.I"></div>
                 <div class="leading-tight">
-                    <div class="font-serif font-bold text-xl text-navy">M.E.SI</div>
-                    <div class="text-[10px] text-slate-400 uppercase tracking-widest hidden sm:block">Mission Évangélique Sion</div>
+                    <div class="font-serif font-bold text-xl nav-logo-text">M.E.SI</div>
+                    <div class="text-[10px] text-white/70 nav-logo-sub uppercase tracking-widest hidden sm:block">Mission Évangélique Sion</div>
                 </div>
             </a>
 
             {{-- Menu desktop --}}
             <ul class="hidden lg:flex items-center gap-1 flex-1 justify-center list-none">
-                <li><a href="{{ route('home') }}" class="px-3 py-2 text-sm font-bold rounded-lg transition-all {{ request()->routeIs('home') ? 'text-gold-dark bg-gold/10 border-b-2 border-gold' : 'text-slate-700 hover:text-gold-dark hover:bg-gold/10' }}">Accueil</a></li>
+                <li><a href="{{ route('home') }}" class="nav-link px-3 py-2 text-sm font-bold rounded-lg transition-all {{ request()->routeIs('home') ? 'text-gold bg-white/15 border-b-2 border-gold' : 'text-white/90 hover:text-white hover:bg-white/10' }}">Accueil</a></li>
 
                 <li class="has-dropdown relative">
-                    <a href="{{ route('eglise.index') }}" class="px-3 py-2 text-sm font-bold rounded-lg transition-all flex items-center gap-1 {{ request()->routeIs('eglise.*') ? 'text-gold-dark bg-gold/10' : 'text-slate-700 hover:text-gold-dark hover:bg-gold/10' }}">
+                    <a href="{{ route('eglise.index') }}" class="nav-link px-3 py-2 text-sm font-bold rounded-lg transition-all flex items-center gap-1 {{ request()->routeIs('eglise.*') ? 'text-gold bg-white/15' : 'text-white/90 hover:text-white hover:bg-white/10' }}">
                         L'Église <i class="fas fa-chevron-down text-[10px] transition-transform"></i>
                     </a>
                     <div class="dropdown-menu absolute top-full left-0 mt-2 w-52 bg-white rounded-2xl shadow-2xl border border-gold/15 overflow-hidden py-2 z-50">
@@ -138,17 +144,17 @@
                     </div>
                 </li>
 
-                <li><a href="{{ route('cultes.index') }}" class="px-3 py-2 text-sm font-bold rounded-lg transition-all {{ request()->routeIs('cultes.*') ? 'text-gold-dark bg-gold/10 border-b-2 border-gold' : 'text-slate-700 hover:text-gold-dark hover:bg-gold/10' }}">Cultes & Live</a></li>
-                <li><a href="{{ route('actualites.index') }}" class="px-3 py-2 text-sm font-bold rounded-lg transition-all {{ request()->routeIs('actualites.*') ? 'text-gold-dark bg-gold/10 border-b-2 border-gold' : 'text-slate-700 hover:text-gold-dark hover:bg-gold/10' }}">Actualités</a></li>
-                <li><a href="{{ route('missions.index') }}" class="px-3 py-2 text-sm font-bold rounded-lg transition-all {{ request()->routeIs('missions.*') ? 'text-gold-dark bg-gold/10 border-b-2 border-gold' : 'text-slate-700 hover:text-gold-dark hover:bg-gold/10' }}">Missions</a></li>
-                <li><a href="{{ route('sermons.index') }}" class="px-3 py-2 text-sm font-bold rounded-lg transition-all {{ request()->routeIs('sermons.*') ? 'text-gold-dark bg-gold/10 border-b-2 border-gold' : 'text-slate-700 hover:text-gold-dark hover:bg-gold/10' }}">Sermons</a></li>
-                <li><a href="{{ route('contact') }}" class="px-3 py-2 text-sm font-bold rounded-lg transition-all {{ request()->routeIs('contact') ? 'text-gold-dark bg-gold/10 border-b-2 border-gold' : 'text-slate-700 hover:text-gold-dark hover:bg-gold/10' }}">Contact</a></li>
+                <li><a href="{{ route('cultes.index') }}" class="nav-link px-3 py-2 text-sm font-bold rounded-lg transition-all {{ request()->routeIs('cultes.*') ? 'text-gold bg-white/15 border-b-2 border-gold' : 'text-white/90 hover:text-white hover:bg-white/10' }}">Cultes & Live</a></li>
+                <li><a href="{{ route('actualites.index') }}" class="nav-link px-3 py-2 text-sm font-bold rounded-lg transition-all {{ request()->routeIs('actualites.*') ? 'text-gold bg-white/15 border-b-2 border-gold' : 'text-white/90 hover:text-white hover:bg-white/10' }}">Actualités</a></li>
+                <li><a href="{{ route('missions.index') }}" class="nav-link px-3 py-2 text-sm font-bold rounded-lg transition-all {{ request()->routeIs('missions.*') ? 'text-gold bg-white/15 border-b-2 border-gold' : 'text-white/90 hover:text-white hover:bg-white/10' }}">Missions</a></li>
+                <li><a href="{{ route('sermons.index') }}" class="nav-link px-3 py-2 text-sm font-bold rounded-lg transition-all {{ request()->routeIs('sermons.*') ? 'text-gold bg-white/15 border-b-2 border-gold' : 'text-white/90 hover:text-white hover:bg-white/10' }}">Sermons</a></li>
+                <li><a href="{{ route('contact') }}" class="nav-link px-3 py-2 text-sm font-bold rounded-lg transition-all {{ request()->routeIs('contact') ? 'text-gold bg-white/15 border-b-2 border-gold' : 'text-white/90 hover:text-white hover:bg-white/10' }}">Contact</a></li>
             </ul>
 
             {{-- Actions --}}
             <div class="flex items-center gap-2 ml-auto lg:ml-0">
                 @auth
-                    <a href="{{ route('admin.dashboard') }}" class="hidden sm:flex items-center gap-1.5 text-xs font-bold px-3 py-2 rounded-lg border border-navy text-navy hover:bg-navy hover:text-white transition-all">
+                    <a href="{{ route('admin.dashboard') }}" class="nav-admin-btn hidden sm:flex items-center gap-1.5 text-xs font-bold px-3 py-2 rounded-lg border border-white/60 text-white hover:bg-white/10 transition-all">
                         <i class="fas fa-user-shield"></i> Admin
                     </a>
                 @else
@@ -158,10 +164,10 @@
                     <i class="fas fa-heart text-xs"></i> Donner
                 </a>
                 {{-- Burger --}}
-                <button id="navToggle" class="lg:hidden flex flex-col gap-1.5 p-2 ml-1">
-                    <span class="block w-6 h-0.5 bg-navy rounded transition-all"></span>
-                    <span class="block w-6 h-0.5 bg-navy rounded transition-all"></span>
-                    <span class="block w-6 h-0.5 bg-navy rounded transition-all"></span>
+                <button id="navToggle" class="nav-burger lg:hidden flex flex-col gap-1.5 p-2 ml-1">
+                    <span class="block w-6 h-0.5 bg-white rounded transition-all"></span>
+                    <span class="block w-6 h-0.5 bg-white rounded transition-all"></span>
+                    <span class="block w-6 h-0.5 bg-white rounded transition-all"></span>
                 </button>
             </div>
         </div>
@@ -207,6 +213,14 @@
     </div>
 </div>
 
+{{-- ══════════ LOADER GLOBAL ══════════ --}}
+<div id="pageLoader" class="fixed inset-0 z-[99999] flex flex-col items-center justify-center pointer-events-none opacity-0 transition-opacity duration-300" style="background:rgba(255,255,255,0.92);backdrop-filter:blur(6px);">
+    <div class="flex flex-col items-center gap-4">
+        <div class="w-14 h-14 rounded-full border-4 border-slate-200 border-t-green-600 animate-spin"></div>
+        <span class="text-green-800 font-bold text-sm uppercase tracking-widest">Chargement…</span>
+    </div>
+</div>
+
 {{-- ══════════ ALERTS ══════════ --}}
 @if(session('success'))
 <div id="alertSuccess" class="fixed top-6 right-6 z-[9999] max-w-sm bg-white rounded-2xl shadow-2xl border border-green-100 p-4 flex items-start gap-3 animate-fade-in">
@@ -237,7 +251,7 @@
 <main>@yield('content')</main>
 
 {{-- ══════════ FOOTER ══════════ --}}
-<footer class="bg-dark text-white">
+<footer class="text-white" style="background: linear-gradient(135deg, #2d6a4f, #52b788)">
     {{-- Vague --}}
     <div class="leading-none">
         <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" class="w-full h-14 fill-slate-50">
@@ -315,6 +329,105 @@
 </footer>
 
 <script src="{{ asset('js/app.js') }}"></script>
+<script>
+/* ── LOADER ── */
+const loader = document.getElementById('pageLoader');
+function showLoader(){ loader.style.opacity='1'; loader.style.pointerEvents='all'; }
+function hideLoader(){ loader.style.opacity='0'; loader.style.pointerEvents='none'; }
+
+document.addEventListener('click', function(e){
+    const a = e.target.closest('a[href]');
+    if (!a) return;
+    const href = a.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('javascript') || a.target==='_blank') return;
+    try { const u=new URL(href,location.origin); if(u.origin!==location.origin) return; } catch(e){ return; }
+    showLoader();
+});
+document.addEventListener('submit', showLoader);
+window.addEventListener('pageshow', hideLoader);
+window.addEventListener('load', hideLoader);
+
+/* ── NAVBAR SCROLL ── */
+(function(){
+    const nav=document.getElementById('navbar');
+    const topbar=document.getElementById('topbar');
+    const green='linear-gradient(135deg,#2d6a4f,#52b788)';
+
+    function set(scrolled){
+        nav.style.transition='background .3s ease,box-shadow .3s ease';
+        if(scrolled){
+            nav.style.background='rgba(255,255,255,0.97)';
+            nav.style.backdropFilter='blur(20px)';
+            nav.style.borderBottom='1px solid rgba(232,176,75,0.2)';
+            nav.style.boxShadow='0 2px 16px rgba(0,0,0,0.07)';
+            nav.querySelectorAll('.nav-link').forEach(el=>{ el.classList.remove('text-white/90','hover:text-white','hover:bg-white/10'); el.classList.add('text-slate-700','hover:text-gold-dark','hover:bg-gold/10'); });
+            nav.querySelectorAll('.nav-logo-text').forEach(el=>el.style.color='#14532d');
+            nav.querySelectorAll('.nav-logo-sub').forEach(el=>el.style.color='#6b7280');
+            nav.querySelectorAll('.nav-burger span').forEach(el=>el.style.background='#1e3a2f');
+            nav.querySelectorAll('.nav-admin-btn').forEach(el=>{ el.style.borderColor='#166534'; el.style.color='#166534'; });
+        } else {
+            nav.style.background=green;
+            nav.style.backdropFilter='';
+            nav.style.borderBottom='none';
+            nav.style.boxShadow='none';
+            nav.querySelectorAll('.nav-link').forEach(el=>{ el.classList.remove('text-slate-700','hover:text-gold-dark','hover:bg-gold/10'); el.classList.add('text-white/90','hover:text-white','hover:bg-white/10'); });
+            nav.querySelectorAll('.nav-logo-text').forEach(el=>el.style.color='#fff');
+            nav.querySelectorAll('.nav-logo-sub').forEach(el=>el.style.color='rgba(255,255,255,0.7)');
+            nav.querySelectorAll('.nav-burger span').forEach(el=>el.style.background='#fff');
+            nav.querySelectorAll('.nav-admin-btn').forEach(el=>{ el.style.borderColor='rgba(255,255,255,0.6)'; el.style.color='#fff'; });
+        }
+        topbar.style.background='#fff'; topbar.style.borderColor='#e2e8f0'; topbar.style.color='#1a4731';
+    }
+    set(scrollY>10);
+    window.addEventListener('scroll',()=>set(scrollY>10),{passive:true});
+})();
+
+/* ── SCROLL REVEAL ── */
+(function(){
+    const io=new IntersectionObserver(entries=>entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } }),{threshold:0.1,rootMargin:'0px 0px -30px 0px'});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+})();
+
+/* ── SMOOTH SCROLL ANCRES ── */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',function(e){
+        const t=document.querySelector(this.getAttribute('href'));
+        if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); }
+    });
+});
+
+/* ── COMPTEURS ── */
+(function(){
+    const io=new IntersectionObserver(entries=>entries.forEach(e=>{
+        if(!e.isIntersecting) return;
+        const el=e.target, target=parseInt(el.dataset.count), suffix=el.dataset.suffix||'';
+        let v=0; const step=Math.ceil(target/90);
+        const t=setInterval(()=>{ v=Math.min(v+step,target); el.textContent=v+suffix; if(v>=target) clearInterval(t); },16);
+        io.unobserve(el);
+    }),{threshold:0.5});
+    document.querySelectorAll('[data-count]').forEach(el=>io.observe(el));
+})();
+
+/* ── MENU MOBILE ── */
+(function(){
+    const toggle=document.getElementById('navToggle');
+    const close=document.getElementById('mobileClose');
+    const overlay=document.getElementById('mobileOverlay');
+    const drawer=document.getElementById('mobileDrawer');
+    const menu=document.getElementById('mobileMenu');
+    function open(){ menu.style.pointerEvents='all'; overlay.style.opacity='1'; drawer.style.transform='translateX(0)'; }
+    function shut(){ overlay.style.opacity='0'; drawer.style.transform='translateX(100%)'; setTimeout(()=>menu.style.pointerEvents='none',350); }
+    if(toggle) toggle.addEventListener('click',open);
+    if(close)  close.addEventListener('click',shut);
+    if(overlay) overlay.addEventListener('click',shut);
+})();
+
+/* ── PROGRESS BARS ── */
+(function(){
+    const io=new IntersectionObserver(entries=>entries.forEach(e=>{ if(e.isIntersecting){ e.target.style.width=e.target.dataset.width+'%'; io.unobserve(e.target); } }),{threshold:0.3});
+    document.querySelectorAll('.progress-bar[data-width]').forEach(b=>io.observe(b));
+})();
+</script>
 @stack('scripts')
 </body>
 </html>

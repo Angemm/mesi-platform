@@ -4,7 +4,7 @@
 @section('content')
 
 {{-- HERO --}}
-<section class="py-20 text-center relative overflow-hidden" style="background:linear-gradient(135deg,#2D6A27 0%,#1C3A18 100%);">
+<section class="py-20 text-center relative overflow-hidden navy-gradient">
     <div class="absolute inset-0" style="background-image:radial-gradient(circle,rgba(232,160,32,.07) 1px,transparent 1px);background-size:40px 40px;"></div>
     <div class="relative z-10 max-w-3xl mx-auto px-6">
         <span class="inline-block px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest mb-5" style="background:rgba(232,160,32,.15);color:#E8A020;">Médiathèque</span>
@@ -36,7 +36,7 @@
                 @endforeach
             </select>
             @endif
-            <button type="submit" class="px-5 py-2.5 rounded-xl text-white text-sm font-bold" style="background:linear-gradient(135deg,#4A8C3F,#2D6A27);">
+            <button type="submit" class="px-5 py-2.5 rounded-xl text-white text-sm font-bold gold-gradient">
                 <i class="fas fa-search mr-1"></i> Filtrer
             </button>
             @if(request()->anyFilled(['q','serie','predicateur']))
