@@ -29,9 +29,9 @@ class AdminMembreController extends Controller
         $membres = $query->orderBy('prenom')->paginate(20)->withQueryString();
 
         // Chiffres rapides pour les cards
-        $actifs      = Membre::where('statut', 'actif')->count();
-        $departements= Departement::count();
-        $dirigeants  = Membre::where('est_dirigeant', true)->count();
+        $actifs       = Membre::where('actif', true)->count();
+        $departements = Departement::count();
+        $dirigeants   = Membre::whereIn('role', ['pasteur','ancien','diacre'])->count();
 
         return view('admin.membres.index', compact('membres', 'actifs', 'departements', 'dirigeants'));
     }
@@ -44,8 +44,6 @@ class AdminMembreController extends Controller
     public function store(Request $request)
     {
         $validated = $this->validateRequest($request);
-        $validated['est_dirigeant']  = $request->boolean('est_dirigeant');
-        $validated['visible_public'] = $request->boolean('visible_public');
 
         if ($request->hasFile('photo')) {
             $validated['photo'] = $request->file('photo')->store('membres', 'public');
@@ -65,8 +63,6 @@ class AdminMembreController extends Controller
     public function update(Request $request, Membre $membre)
     {
         $validated = $this->validateRequest($request);
-        $validated['est_dirigeant']  = $request->boolean('est_dirigeant');
-        $validated['visible_public'] = $request->boolean('visible_public');
 
         if ($request->hasFile('photo')) {
             Storage::disk('public')->delete($membre->photo ?? '');
@@ -90,20 +86,16 @@ class AdminMembreController extends Controller
     private function validateRequest(Request $request): array
     {
         return $request->validate([
-            'prenom'           => 'required|string|max:100',
-            'nom'              => 'required|string|max:100',
-            'email'            => 'nullable|email|max:150',
-            'telephone'        => 'nullable|string|max:20',
-            'adresse'          => 'nullable|string|max:250',
-            'date_naissance'   => 'nullable|date',
-            'sexe'             => 'nullable|in:M,F',
-            'role_eglise'      => 'nullable|string|max:100',
-            'departement_id'   => 'nullable|exists:departements,id',
-            'statut'           => 'required|in:actif,inactif,visiteur',
-            'date_integration' => 'nullable|date',
-            'citation'         => 'nullable|string|max:500',
-            'ordre'            => 'nullable|integer',
-            'photo'            => 'nullable|image|max:2048',
+            'prenom'         => 'required|string|max:100',
+            'nom'            => 'required|string|max:100',
+            'email'          => 'nullable|email|max:150',
+            'telephone'      => 'nullable|string|max:20',
+            'date_naissance' => 'nullable|date',
+            'date_bapteme'   => 'nullable|date',
+            'role'           => 'nullable|in:pasteur,ancien,diacre,fidele',
+            'departement_id' => 'nullable|exists:departements,id',
+            'actif'          => 'nullable|boolean',
+            'photo'          => 'nullable|image|max:2048',
         ]);
     }
 }

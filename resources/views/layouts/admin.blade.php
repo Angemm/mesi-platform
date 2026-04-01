@@ -33,9 +33,9 @@
     </style>
     @stack('styles')
 </head>
-<body class="font-sans bg-slate-50 overflow-x-hidden">
+<body class="font-sans bg-slate-50 overflow-hidden h-screen">
 
-<div class="flex min-h-screen">
+<div class="flex h-screen overflow-hidden">
 
     {{-- ══ SIDEBAR ══ --}}
     <aside id="adminSidebar" class="fixed top-0 left-0 h-full w-64 bg-navy z-50 flex flex-col transition-transform duration-300 lg:translate-x-0 -translate-x-full shadow-2xl">
@@ -128,7 +128,7 @@
     <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden" onclick="closeSidebar()"></div>
 
     {{-- ══ MAIN ══ --}}
-    <div class="flex-1 flex flex-col min-h-screen lg:ml-64">
+    <div class="flex-1 flex flex-col h-screen overflow-hidden lg:ml-64">
 
         {{-- Header --}}
         <header class="sticky top-0 z-30 bg-white border-b border-slate-100 px-6 py-4 flex items-center justify-between shadow-sm">
@@ -166,7 +166,7 @@
         @endif
 
         {{-- Content --}}
-        <main class="flex-1 p-6">
+        <main class="flex-1 overflow-y-auto p-6">
             @yield('content')
         </main>
     </div>

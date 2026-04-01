@@ -10,7 +10,7 @@ class AdminDepartementController extends Controller
 {
     public function index()
     {
-        $departements = Departement::withCount('membres')->orderBy('ordre')->get();
+        $departements = Departement::withCount('membres')->orderBy('nom')->get();
         return view('admin.departements.index', compact('departements'));
     }
 
@@ -26,7 +26,6 @@ class AdminDepartementController extends Controller
             'description' => 'nullable|string',
             'responsable' => 'nullable|string|max:150',
             'icone'       => 'nullable|string|max:60',
-            'ordre'       => 'nullable|integer',
         ]);
 
         Departement::create($validated);
@@ -47,7 +46,6 @@ class AdminDepartementController extends Controller
             'description' => 'nullable|string',
             'responsable' => 'nullable|string|max:150',
             'icone'       => 'nullable|string|max:60',
-            'ordre'       => 'nullable|integer',
         ]);
 
         $departement->update($validated);

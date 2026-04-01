@@ -15,8 +15,8 @@ class AdminDonController extends Controller
         if ($request->filled('q')) {
             $q = $request->q;
             $query->where(function ($sq) use ($q) {
-                $sq->where('nom_donateur',   'like', "%{$q}%")
-                   ->orWhere('email_donateur','like', "%{$q}%");
+                $sq->where('donateur_nom',   'like', "%{$q}%")
+                   ->orWhere('donateur_email','like', "%{$q}%");
             });
         }
 
@@ -34,7 +34,7 @@ class AdminDonController extends Controller
         $stats = [
             'total_dons'        => Don::where('statut', 'confirme')->sum('montant'),
             'dons_mois'         => Don::whereMonth('created_at', now()->month)->count(),
-            'donateurs'         => Don::distinct('email_donateur')->count(),
+            'donateurs'         => Don::distinct('donateur_email')->count('donateur_email'),
             'missions_financees'=> Don::distinct('mission_id')->whereNotNull('mission_id')->count(),
         ];
 

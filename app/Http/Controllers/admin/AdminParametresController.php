@@ -12,9 +12,9 @@ class AdminParametresController extends Controller
     public function index()
     {
         $stats = [
-            'membres'  => \App\Models\Membre::where('statut', 'actif')->count(),
+            'membres'  => \App\Models\Membre::where('actif', true)->count(),
             'cultes'   => \App\Models\Culte::where('publie', true)->count(),
-            'missions' => \App\Models\Mission::where('statut', 'active')->count(),
+            'missions' => \App\Models\Mission::where('actif', true)->count(),
             'annees'   => (int) date('Y') - 1990,
         ];
 
