@@ -101,6 +101,15 @@ require __DIR__.'/auth.php';
 | ROUTES ADMIN
 |--------------------------------------------------------------------------
 */
+
+// /admin sans auth → redirige vers login
+Route::get('/admin', function () {
+    if (auth()->check()) {
+        return redirect()->route('admin.dashboard');
+    }
+    return redirect()->route('login');
+});
+
 Route::middleware(['auth', 'role:admin,editeur'])
     ->prefix('admin')
     ->name('admin.')

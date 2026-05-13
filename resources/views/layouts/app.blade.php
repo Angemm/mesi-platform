@@ -153,13 +153,14 @@
 
             {{-- Actions --}}
             <div class="flex items-center gap-2 ml-auto lg:ml-0">
-                @auth
+                {{-- Bouton connexion/admin masqué sur le site public --}}
+                {{-- @auth
                     <a href="{{ route('admin.dashboard') }}" class="nav-admin-btn hidden sm:flex items-center gap-1.5 text-xs font-bold px-3 py-2 rounded-lg border border-white/60 text-white hover:bg-white/10 transition-all">
                         <i class="fas fa-user-shield"></i> Admin
                     </a>
                 @else
                     <a href="{{ route('login') }}" class="hidden sm:block text-sm font-bold text-navy hover:text-gold-dark transition-colors px-3 py-2">Connexion</a>
-                @endauth
+                @endauth --}}
                 <a href="{{ route('don') }}" class="gold-gradient text-white px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 shadow-lg shadow-gold/30 hover:shadow-gold/50 hover:-translate-y-0.5 transition-all">
                     <i class="fas fa-heart text-xs"></i> Donner
                 </a>
@@ -199,13 +200,14 @@
             </ul>
         </nav>
         <div class="p-6 border-t border-white/10 space-y-3">
-            @auth
+            {{-- Connexion masquée sur le site public --}}
+            {{-- @auth
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl border border-white/20 text-white font-bold text-sm hover:bg-white/10 transition-all">
                     <i class="fas fa-user-shield"></i> Administration
                 </a>
             @else
                 <a href="{{ route('login') }}" class="flex items-center justify-center py-3 px-4 rounded-xl border border-white/20 text-white font-bold text-sm hover:bg-white/10 transition-all">Connexion</a>
-            @endauth
+            @endauth --}}
             <a href="{{ route('don') }}" class="gold-gradient text-white flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-bold text-sm">
                 <i class="fas fa-heart"></i> Faire un Don
             </a>
